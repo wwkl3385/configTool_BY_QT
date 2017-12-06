@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/"/>
+    <qresource prefix="/new/configToolIcon">
+        <file>icon/head.bmp</file>
+        <file>icon/teld_w.ico</file>
+        <file>icon/ConfigTool.ico</file>
+        <file>icon/teld_r.ico</file>
+    </qresource>
+</RCC>
