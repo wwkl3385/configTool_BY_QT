@@ -24,14 +24,22 @@ ConfigTool::ConfigTool(QWidget *parent) :
     setWindowIcon(QIcon("ConfigTool.ico")); //设置软件图标
     this->setFixedSize(822, 814);           //设置窗口尺寸
 
-    mapLib = Cache.libConfigIniReadCache(); //maplib初始化为缓存区数据。
+    /* 功能模块默认选项配置 --设置CheckBox 不可用*/
+    ui->updateCheckBox->setDisabled(true);
+    ui->settingCheckBox->setDisabled(true);
+    ui->realDataCheckBox->setDisabled(true);
+    ui->cacheCheckBox->setDisabled(true);
+    ui->DatabaseCheckBox->setDisabled(true);
+    ui->logCheckBox->setDisabled(true);
 
+    /*读缓存区数据，写入控件*/
+    mapLib = Cache.libConfigIniReadCache(); //maplib初始化为缓存区数据。
     QCacheMapLib::iterator it;
     for(it = mapLib.begin(); it != mapLib.end(); ++it)
     {
         INI_LIBCONFIG_CTRL *libIni;
         libIni = it.value();
-        ui->centralWidget->findChild<QCheckBox *>(it.key())->setChecked(libIni->value[2] == "true" ? true : false);
+        ui->centralWidget->findChild<QCheckBox *>(it.key())->setChecked(libIni->value[2] == "true" ? true : false); //数据写入控件
     }
 
     /*groupbox 背景颜色设置*/
@@ -110,4 +118,28 @@ void ConfigTool::on_generatePushButton_clicked()
     }
 
     Cache.libConfigIniWriteCache(mapLib);
+}
+
+/**********************************************************************
+* 功    能：显示屏槽函数
+* 输    入：
+* 输    出：
+* 作    者：
+* 编写日期：2017.12.6
+***********************************************************************/
+void ConfigTool::on_screenCheckBox_clicked()
+{
+    ui->screenSinglePileCheckBox->setChecked(false); //显示屏与显示屏-直流单桩按钮 互斥操作
+}
+
+/**********************************************************************
+* 功    能：显示屏-直流单桩槽函数
+* 输    入：
+* 输    出：
+* 作    者：
+* 编写日期：2017.12.6
+***********************************************************************/
+void ConfigTool::on_screenSinglePileCheckBox_clicked()
+{
+    ui->screenCheckBox->setChecked(false);   //显示屏与显示屏-直流单桩按钮 互斥操作
 }

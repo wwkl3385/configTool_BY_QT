@@ -63,6 +63,10 @@ private slots:
 
     void on_generatePushButton_clicked();
 
+    void on_screenCheckBox_clicked();
+
+    void on_screenSinglePileCheckBox_clicked();
+
 private:
     Ui::ConfigTool *ui;
 

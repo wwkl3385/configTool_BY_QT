@@ -22,28 +22,47 @@ const QString strWidgetNameLib[] = {"updateCheckBox" ,                       //0
     "screenCheckBox"   , "screenSinglePileCheckBox", "gpioCheckBox"     ,    //10-12
     "ticketCheckBox"   , "scannerCheckBox"         , "cardCheckBox"     };   //13-15 设备模块选择按钮名称：4-15
 
- /* 功能模块 libconfig.ini 对应的文本信息  依次为：type  library  enable  库的名字*.so  */
-const QString strKeyNameLib[][4] = {
-    { "UPDATE/type"          , "UPDATE/library"          , "UPDATE/enable"          , "libUpdate.so"                }, //0  : 升级服务
-    { "CHARGESERVICE/type"   , "CHARGESERVICE/library"   , "CHARGESERVICE/enable"   , "libChargeService.so"         }, //1  : 充电服务
-    { "SCHEDULE/type"        , "SCHEDULE/library"        , "SCHEDULE/enable"        , "libLoadSchedule.so"          }, //2  : 负荷调度
-    { "DEVICEMANAGE/type"    , "DEVICEMANAGE/library"    , "DEVICEMANAGE/enable"    , "libDeviceManage.so"          }, //3  : 设备管理
-    { "SERVER0/type"         , "SERVER0/library"         , "SERVER0/enable"         , "libIEC104Server.so"          }, //4  : 云平台
-    { "SERVER1/type"         , "SERVER1/library"         , "SERVER1/enable"         , "libIEC104Server.so"          }, //5  : 场站平台
-    { "WEBSERVER/type"       , "WEBSERVER/library"       , "WEBSERVER/enable"       , "libWebServer.so"             }, //6  : Web平台
-    { "CHARGEEQUIPMENT/type" , "CHARGEEQUIPMENT/library" , "CHARGEEQUIPMENT/enable" , "libChargeEquipment.so"       }, //7  : 充电设备
-    { "AMMETER/type"         , "AMMETER/library"         , "AMMETER/enable"         , "libAmmeter.so"               }, //8  : 电表
-    { "TEMPHUMI/type"        , "TEMPHUMI/library"        , "TEMPHUMI/enable"        , "libTempHumi.so"              }, //9  : 温度计
-    { "SCREEN/type"          , "SCREEN/library"          , "SCREEN/enable"          , "libSerialScreen.so"          }, //10 : 显示屏
-    { "SCREENSINGLEPILE/type", "SCREENSINGLEPILE/library", "SCREENSINGLEPILE/enable", "libSerialScreenSinglePile.so"}, //11 : 显示屏-直流单桩
-    { "GPIO/type"            , "GPIO/library"            , "GPIO/enable"            , "libGPIO.so"                  }, //12 : GPIO设备
-    { "TICKET/type"          , "TICKET/library"          , "TICKET/enable"          , "libTicketDev.so"             }, //13 : 小票机
-    { "SCANCODE/type"        , "SCANCODE/library"        , "SCANCODE/enable"        , "libScanCode.so"              }, //14 : 扫码器
-    { "CARD/type"            , "CARD/library"            , "CARD/enable"            , "libCard.so"                 }}; //15 : 刷卡器
+ /* 功能模块 libconfig.ini 对应的文本信息  依次为：type  library  enable   */
+const QString strKeyNameLib[][3] = {
+    { "UPDATE/type"          , "UPDATE/library"          , "UPDATE/enable"          },  //0  : 升级服务
+    { "CHARGESERVICE/type"   , "CHARGESERVICE/library"   , "CHARGESERVICE/enable"   },  //1  : 充电服务
+    { "SCHEDULE/type"        , "SCHEDULE/library"        , "SCHEDULE/enable"        },  //2  : 负荷调度
+    { "DEVICEMANAGE/type"    , "DEVICEMANAGE/library"    , "DEVICEMANAGE/enable"    },  //3  : 设备管理
+    { "SERVER0/type"         , "SERVER0/library"         , "SERVER0/enable"         },  //4  : 云平台
+    { "SERVER1/type"         , "SERVER1/library"         , "SERVER1/enable"         },  //5  : 场站平台
+    { "WEBSERVER/type"       , "WEBSERVER/library"       , "WEBSERVER/enable"       },  //6  : Web平台
+    { "CHARGEEQUIPMENT/type" , "CHARGEEQUIPMENT/library" , "CHARGEEQUIPMENT/enable" },  //7  : 充电设备
+    { "AMMETER/type"         , "AMMETER/library"         , "AMMETER/enable"         },  //8  : 电表
+    { "TEMPHUMI/type"        , "TEMPHUMI/library"        , "TEMPHUMI/enable"        },  //9  : 温度计
+    { "SCREEN/type"          , "SCREEN/library"          , "SCREEN/enable"          },  //10 : 显示屏
+    { "SCREENSINGLEPILE/type", "SCREENSINGLEPILE/library", "SCREENSINGLEPILE/enable"},  //11 : 显示屏-直流单桩
+    { "GPIO/type"            , "GPIO/library"            , "GPIO/enable"            },  //12 : GPIO设备
+    { "TICKET/type"          , "TICKET/library"          , "TICKET/enable"          },  //13 : 小票机
+    { "SCANCODE/type"        , "SCANCODE/library"        , "SCANCODE/enable"        },  //14 : 扫码器
+    { "CARD/type"            , "CARD/library"            , "CARD/enable"            }}; //15 : 刷卡器
+
+/* 默认值 :type,库的名称*.so,val */
+const QString strKeyVal[][3] = {
+    { "device", "libUpdate.so"                , "true" },  //0  : 升级服务
+    { "device", "libChargeService.so"         , "false"},  //1  : 充电服务
+    { "device", "libLoadSchedule.so"          , "false"},  //2  : 负荷调度
+    { "device", "libDeviceManage.so"          , "false"},  //3  : 设备管理
+    { "remote", "libIEC104Server.so"          , "false"},  //4  : 云平台
+    { "local" , "libIEC104Server.so"          , "false"},  //5  : 场站平台
+    { "device", "libWebServer.so"             , "false"},  //6  : Web平台
+    { "device", "libChargeEquipment.so"       , "false"},  //7  : 充电设备
+    { "device", "libAmmeter.so"               , "false"},  //8  : 电表
+    { "device", "libTempHumi.so"              , "false"},  //9  : 温度计
+    { "device", "libSerialScreen.so"          , "false"},  //10 : 显示屏
+    { "device", "libSerialScreenSinglePile.so", "false"},  //11 : 显示屏-直流单桩
+    { "device", "libGPIO.so"                  , "false"},  //12 : GPIO设备
+    { "device", "libTicketDev.so"             , "false"},  //13 : 小票机
+    { "device", "libScanCode.so"              , "false"},  //14 : 扫码器
+    { "device", "libCard.so"                  , "false"}}; //15 : 刷卡器;
 
 
- /* 配置选项一 UI中控件的名称 */
-const QString strWidgetName[] = {
+/* 配置选项一 UI中控件的名称 */
+const QString strFirstWidgetName[] = {
     "directLineEdit"         , "singleLineEdit"          , "threeLineEdit"                 ,
     "passwordLineEdit"       , "teuiTypeComboBox"        , "boardComboBox"                 ,  // 0-5 :CSCU系统配置
     "cardTypeComboBox"       , "vinTypeComboBox"         , "AbnormalOpenRadioButton"       ,
@@ -52,7 +71,7 @@ const QString strWidgetName[] = {
 
 
  /* 配置选项一 config.ini 中对应的文本信息*/
-const QString strKeyName[] = {
+const QString strFirstKeyName[] = {
     "CSCUSys/DirectCurrent", "CSCUSys/SinglePhase"              , "CSCUSys/ThreePhase" ,  // 0-2: 直流终端数量，单相终端数量，三相终端数量
     "CSCUSys/Password"     , "CSCUSys/NormalCard"               , "CSCUSys/BoardType"  ,  // 3-5: 设置密码，交互类型，底板类型
     "CHARGE/CardType"      , "CHARGE/VinType"                   , "CHARGE/EnergyFilter",  // 6-8: 卡片类型，车牌号/VIN,异常电量过滤
@@ -79,8 +98,9 @@ DataCache::DataCache(QObject *parent) : QObject(parent)
         plibConfigIni = new  INI_LIBCONFIG_CTRL;
 
         /* 写入libconfig.ini配置文件的默认部分 :type和library对应的值*/
-        plibConfigIni->value[0] = "device";            //section/key
-        plibConfigIni->value[1] = strKeyNameLib[i][3]; // section/library
+        plibConfigIni->value[0] = strKeyVal[i][0]; // section/key
+        plibConfigIni->value[1] = strKeyVal[i][1]; // section/library
+        plibConfigIni->value[2] = strKeyVal[i][2]; // section/val
 
         /* 段名/键名 */
         for(int j=0; j<3; j++)
@@ -109,10 +129,12 @@ QCacheMapLib DataCache::libConfigIniReadCache()
     {
         plibConfigIniTmp = it.value();
 
-        /*只读取enable项对应的值*/
-        plibConfigIniTmp->value[2] = configIniRead->value(plibConfigIniTmp->settingName[2]).toString();
+        for (int i=0; i<3; i++)
+        {
+            plibConfigIniTmp->value[i] = configIniRead->value(plibConfigIniTmp->settingName[i], plibConfigIniTmp->value[i]).toString();
+        }
 
-        //dataCacheMapLib[it.key()] = plibConfigIniTmp; //使用结构体指针不需要这个赋值。
+        //dataCacheMapLib[it.key()] = plibConfigIniTmp; //使用结构体指针不需要这个赋值。更新map数据
     }
 
     return  dataCacheMapLib;

@@ -27,7 +27,7 @@ typedef enum _WIDGET_TYPE
 typedef struct _INI_LIBCONFIG_CTRL
 {
     QString      settingName[3];  //配置文件libconfig.ini的section段
-    QString      value[3];        //键值
+    QString      value[4];        //键值
     //WIDGET_TYPE  ctlType;       //UI控件的类型
 
 }INI_LIBCONFIG_CTRL;
