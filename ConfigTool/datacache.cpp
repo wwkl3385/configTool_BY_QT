@@ -272,6 +272,33 @@ QCacheMapConfg DataCache::configIniReadCache()
 
     return  dataCacheMapConfig;
 }
+
+
+/**********************************************************************
+* 功    能： 把map缓冲区的值写入config.ini
+* 输    入：
+* 输    出：
+* 作    者：刘卫明
+* 编写日期：2017.12.7
+***********************************************************************/
+void DataCache::configIniWriteCache(QCacheMapConfg cacheMapConfg)
+{
+    QSettings          *configIniWrite = new QSettings("../bin/config.ini", QSettings::IniFormat);
+    INI_CONFIG_CTRL    *pconfigIniTmp;
+
+    QCacheMapConfg::iterator it;
+    for (it = cacheMapConfg.begin(); it != cacheMapConfg.end(); ++it)
+    {
+        pconfigIniTmp = it.value();
+
+        /* 写入config.ini配置文件 */
+        configIniWrite->setValue(pconfigIniTmp->settingName, pconfigIniTmp->value);
+    }
+
+    delete configIniWrite;
+}
+
+
 /**********************************************************************
 * 功    能： 读libconfig.ini,存入缓存区map(dataCacheMapLib)
 * 输    入：
@@ -289,7 +316,6 @@ QCacheMapLib DataCache::libConfigIniReadCache()
     for (it = dataCacheMapLib.begin(); it != dataCacheMapLib.end(); ++it)
     {
         plibConfigIniTmp = it.value();
-
         for (int i=0; i<3; i++)
         {
             plibConfigIniTmp->value[i] = configIniRead->value(plibConfigIniTmp->settingName[i], plibConfigIniTmp->value[i]).toString();

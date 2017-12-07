@@ -51,7 +51,9 @@ public:
     QCacheMapLib   readCache();
     QCacheMapLib   libConfigIniReadCache();
     QCacheMapConfg configIniReadCache();
+
     void libConfigIniWriteCache(QCacheMapLib cacheMapLib);
+    void configIniWriteCache(QCacheMapConfg cacheMapConfg);
 
 signals:
 

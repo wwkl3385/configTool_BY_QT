@@ -51,12 +51,30 @@ ConfigTool::ConfigTool(QWidget *parent) :
         configIni = it.value();
         if (configIni->ctlType == LINEEDIT_TYPE)
             ui->centralWidget->findChild<QLineEdit *>(it.key())->setText(configIni->value);
-#if 1
         if (configIni->ctlType == RADIOBUTTON_TYPE)
         {
-            ui->centralWidget->findChild<QRadioButton *>(it.key())->setChecked((configIni->value == "1" ? true : false) | (configIni->value == "true" ? true : false));
-            if ((configIni->value != "1") | (configIni->value != "true"))
-                ; //按钮开关设置
+            ui->centralWidget->findChild<QRadioButton *>(it.key())->setChecked((configIni->value == "1" ? true : false)  \
+                                                                               | (configIni->value == "true" ? true : false));
+
+            /* 互斥按钮处理 */
+            if ((it.key() == "AbnormalOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+                ui->centralWidget->findChild<QRadioButton *>("AbnormalCloseRadioButton")->setChecked(true);
+            if ((it.key() == "buttonOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+                ui->centralWidget->findChild<QRadioButton *>("buttonCloseRadioButton")->setChecked(true);
+            if ((it.key() == "cardAutoOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+                ui->centralWidget->findChild<QRadioButton *>("cardAutoCloseRadioButton")->setChecked(true);
+            if ((it.key() == "cardMultiOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+                ui->centralWidget->findChild<QRadioButton *>("cardMultiCloseRadioButton")->setChecked(true);
+            if ((it.key() == "localEncryptOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+                ui->centralWidget->findChild<QRadioButton *>("localEncryptCloseRadioButton")->setChecked(true);
+            if ((it.key() == "remoteEncryptOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+                ui->centralWidget->findChild<QRadioButton *>("remoteEncryptCloseRadioButton")->setChecked(true);
+            if ((it.key() == "singlePileGroupOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+                ui->centralWidget->findChild<QRadioButton *>("singlePileGroupCloseRadioButton")->setChecked(true);
+            if ((it.key() == "ticketOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+                ui->centralWidget->findChild<QRadioButton *>("ticketCloseRadioButton")->setChecked(true);
+            if ((it.key() == "vinAutoOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+                ui->centralWidget->findChild<QRadioButton *>("vinAutoCloseRadioButton")->setChecked(true);
         }
 
         if (configIni->ctlType == COMBOBOX_TYPE)
@@ -68,10 +86,7 @@ ConfigTool::ConfigTool(QWidget *parent) :
            }
            ui->centralWidget->findChild<QComboBox *>(it.key())->setCurrentIndex(configIni->value.toInt() - 1);
         }
-#endif
-
     }
-
 
     /*groupbox 背景颜色设置*/
 #if 0
@@ -128,7 +143,7 @@ void ConfigTool::on_keyTranslatePushButton_clicked()
 ***********************************************************************/
 void ConfigTool::on_actionAbout_triggered()
 {
-    QMessageBox::about(NULL, "关于", "Copyright (c) 2017, 青岛特来电新能源有限公司, All rights reserved."
+    QMessageBox::about(NULL, "关于", "Copyright (c) 2017, 青岛特来电新能源有限公司, All rights reserved." \
                                    "\n\n集控器配置工具V0.9\n\n智能充电中心");
 }
 
@@ -141,16 +156,53 @@ void ConfigTool::on_actionAbout_triggered()
 ***********************************************************************/
 void ConfigTool::on_generatePushButton_clicked()
 {
-    INI_LIBCONFIG_CTRL *plibConfigIniTmp;
 
-    QCacheMapLib::iterator it;
-    for (it = mapLib.begin(); it != mapLib.end(); ++it)
+    /* libconfig.ini*/
+    QCacheMapLib::iterator its;
+    for (its = mapLib.begin(); its != mapLib.end(); ++its)
     {
-        plibConfigIniTmp = it.value();
-        plibConfigIniTmp->value[2] = (ui->centralWidget->findChild<QCheckBox *>(it.key())->checkState() == 2 ? "true" : "false");
+        INI_LIBCONFIG_CTRL *plibConfigIniTmp;
+        plibConfigIniTmp = its.value();
+        plibConfigIniTmp->value[2] = (ui->centralWidget->findChild<QCheckBox *>(its.key())->checkState() == 2 ? "true" : "false");
     }
 
     Cache.libConfigIniWriteCache(mapLib);
+
+    /*config.ini*/
+
+    QCacheMapConfg::iterator it;
+    for (it = mapConfig.begin(); it != mapConfig.end(); ++it)
+    {
+        INI_CONFIG_CTRL *configIni;
+        configIni = it.value();
+
+        if (configIni->ctlType == LINEEDIT_TYPE)
+            configIni->value = ui->centralWidget->findChild<QLineEdit *>(it.key())->text();
+
+        if (configIni->ctlType == RADIOBUTTON_TYPE)
+        {
+            configIni->value = (ui->centralWidget->findChild<QRadioButton *>(it.key())->isChecked() == 0 ? "0" : "1");
+
+            /* 特殊按钮处理 */
+
+            if ((it.key() == "localEncryptOpenRadioButton") | (it.key() == "remoteEncryptOpenRadioButton"))
+                    configIni->value = (configIni->value == "1" ? "true" : "false");
+         }
+
+        if (configIni->ctlType == COMBOBOX_TYPE)
+        {
+            if (it.key() == "webUrlComboBox")
+            {
+               configIni->value = ui->centralWidget->findChild<QComboBox *>(it.key())->currentText();
+            }
+            else
+            {
+                configIni->value = QString::number((ui->centralWidget->findChild<QComboBox *>(it.key())->currentIndex()) + 1, 10); //整型转为对应的字符串。
+            }
+        }
+    }
+
+    Cache.configIniWriteCache(mapConfig);
 }
 
 /**********************************************************************
@@ -175,4 +227,12 @@ void ConfigTool::on_screenCheckBox_clicked()
 void ConfigTool::on_screenSinglePileCheckBox_clicked()
 {
     ui->screenCheckBox->setChecked(false);   //显示屏与显示屏-直流单桩按钮 互斥操作
+}
+
+void ConfigTool::on_webUrlComboBox_currentTextChanged(const QString &arg1)
+{
+   if ( arg1 == "http://api.teld.cn")
+       ui->webPortLineEdit->setText("8001");
+   if (arg1 == "https://ctrl.teld.cn")
+       ui->webPortLineEdit->setText("443");
 }

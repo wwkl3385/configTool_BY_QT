@@ -64,6 +64,7 @@ private slots:
     void on_generatePushButton_clicked();
     void on_keyTranslatePushButton_clicked();
     void on_screenSinglePileCheckBox_clicked();
+    void on_webUrlComboBox_currentTextChanged(const QString &arg1);
 
 private:
     Ui::ConfigTool *ui;
