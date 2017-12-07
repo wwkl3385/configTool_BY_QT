@@ -64,13 +64,13 @@ QString translateDlg::string2Hex(QString strAnsi)
 {
     QString str;
     QString strHex;
-    if(strAnsi.isEmpty())
+    if (strAnsi.isEmpty())
     {
         QMessageBox::information(NULL, "秘钥装换", "输入信息为空", QMessageBox::NoButton, QMessageBox::NoButton);
         //QMessageBox::warning(NULL, "warning", "Content", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     }
 
-    for(int i = 0; i < strAnsi.toLocal8Bit().length(); i++)
+    for (int i = 0; i < strAnsi.toLocal8Bit().length(); i++)
     {
         str.sprintf("%02X", strAnsi.toLocal8Bit().at(i));
         strHex += str;
@@ -88,12 +88,12 @@ QString translateDlg::string2Hex(QString strAnsi)
 QString translateDlg::hex2String(QString strHex)
 {
     int len = strHex.length();
-    if(strHex.isEmpty())
+    if (strHex.isEmpty())
     {
         QMessageBox::information(NULL, "秘钥装换", "输入信息为空", QMessageBox::NoButton, QMessageBox::NoButton);
         //QMessageBox::warning(NULL, "warning", "Content", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     }
-    if(len % 2)
+    if (len % 2)
     {
         QMessageBox::information(NULL, "秘钥装换", "输入字符数必须为偶数", QMessageBox::NoButton, QMessageBox::NoButton);
         return (" ");
@@ -101,7 +101,7 @@ QString translateDlg::hex2String(QString strHex)
 
     QString str;
     QString strAnsi;
-    for(int i=0; i<strHex.toLocal8Bit().length(); i=i+2)
+    for (int i=0; i<strHex.toLocal8Bit().length(); i=i+2)
     {
         str.sprintf("%c", (int)strtol(strHex.toLocal8Bit().mid(i, 2), NULL, 16));
         strAnsi += str;

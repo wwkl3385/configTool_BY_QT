@@ -13,35 +13,34 @@
 
 #include <QObject>
 #include <QMap>
+#include<array>
 
-const uint MODULE_NUM =16; //功能模块控件的数量-有MODULE_NUM个配置选项
+//const uint MODULE_NUM =16; //功能模块控件的数量-有MODULE_NUM个配置选项
 
 /*UI控件类型的枚举*/
 typedef enum _WIDGET_TYPE
 {
-    CHECKBOX = 0,
-    LINEEDIT,
-    RADIObUTTON,
+    LINEEDIT_TYPE = 1,
+    COMBOBOX_TYPE,
+    RADIOBUTTON_TYPE
 }WIDGET_TYPE;
 
 typedef struct _INI_LIBCONFIG_CTRL
 {
     QString      settingName[3];  //配置文件libconfig.ini的section段
-    QString      value[4];        //键值
-    //WIDGET_TYPE  ctlType;       //UI控件的类型
-
+    QString      value[3];        //键值
 }INI_LIBCONFIG_CTRL;
 
 typedef QMap<QString, INI_LIBCONFIG_CTRL*> QCacheMapLib;
 
 typedef struct _INI_CONFIG_CTRL
 {
-    QString      settingName[];   //配置文件config.ini的section段
+    QString      settingName;   //配置文件config.ini的section段
     QString      value;          //键值
-    WIDGET_TYPE  ctlType;        //UI控件的类型
-}INI_CON_CONFIG_CTRL;
+    int          ctlType;        //UI控件的类型
+}INI_CONFIG_CTRL;
 
-typedef QMap<QString, INI_LIBCONFIG_CTRL> QCacheMapConfg;
+typedef QMap<QString, INI_CONFIG_CTRL*> QCacheMapConfg;
 
 class DataCache : public QObject
 {
@@ -49,8 +48,9 @@ class DataCache : public QObject
 public:
     explicit DataCache(QObject *parent = nullptr);
 
-    QCacheMapLib readCache();
-    QCacheMapLib libConfigIniReadCache();
+    QCacheMapLib   readCache();
+    QCacheMapLib   libConfigIniReadCache();
+    QCacheMapConfg configIniReadCache();
     void libConfigIniWriteCache(QCacheMapLib cacheMapLib);
 
 signals:

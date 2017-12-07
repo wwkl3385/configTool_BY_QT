@@ -32,15 +32,46 @@ ConfigTool::ConfigTool(QWidget *parent) :
     ui->DatabaseCheckBox->setDisabled(true);
     ui->logCheckBox->setDisabled(true);
 
-    /*读缓存区数据，写入控件*/
+    /*libconfig.ini 读缓存区数据，写入控件*/
     mapLib = Cache.libConfigIniReadCache(); //maplib初始化为缓存区数据。
-    QCacheMapLib::iterator it;
-    for(it = mapLib.begin(); it != mapLib.end(); ++it)
+    QCacheMapLib::iterator its;
+    for (its = mapLib.begin(); its != mapLib.end(); ++its)
     {
         INI_LIBCONFIG_CTRL *libIni;
-        libIni = it.value();
-        ui->centralWidget->findChild<QCheckBox *>(it.key())->setChecked(libIni->value[2] == "true" ? true : false); //数据写入控件
+        libIni = its.value();
+        ui->centralWidget->findChild<QCheckBox *>(its.key())->setChecked(libIni->value[2] == "true" ? true : false); //数据写入控件
     }
+
+    /*config.ini 读缓存区数据，写入控件*/
+    mapConfig = Cache.configIniReadCache();
+    QCacheMapConfg::iterator it;
+    for (it = mapConfig.begin(); it != mapConfig.end(); ++it)
+    {
+        INI_CONFIG_CTRL *configIni;
+        configIni = it.value();
+        if (configIni->ctlType == LINEEDIT_TYPE)
+            ui->centralWidget->findChild<QLineEdit *>(it.key())->setText(configIni->value);
+#if 1
+        if (configIni->ctlType == RADIOBUTTON_TYPE)
+        {
+            ui->centralWidget->findChild<QRadioButton *>(it.key())->setChecked((configIni->value == "1" ? true : false) | (configIni->value == "true" ? true : false));
+            if ((configIni->value != "1") | (configIni->value != "true"))
+                ; //按钮开关设置
+        }
+
+        if (configIni->ctlType == COMBOBOX_TYPE)
+        {
+           if (configIni->value.length() > 3) //过滤不同类型的值
+           {
+               ui->centralWidget->findChild<QComboBox *>(it.key())->setCurrentText(configIni->value);
+               continue;
+           }
+           ui->centralWidget->findChild<QComboBox *>(it.key())->setCurrentIndex(configIni->value.toInt() - 1);
+        }
+#endif
+
+    }
+
 
     /*groupbox 背景颜色设置*/
 #if 0
@@ -58,10 +89,12 @@ ConfigTool::ConfigTool(QWidget *parent) :
     //ui->AbnormalOpenRadioButton->setEnabled(0);
     //ui->MODULE("moduleTab")->setStyleSheet("QGroupBox{background:beige}");
     //ui->NAME(moduleTab)->setStyleSheet("QGroupBox{background:beige}");
+
     ui->moduleTab->setStyleSheet("QGroupBox{background:beige}");
     ui->firstSettingTab->setStyleSheet("QGroupBox{background:bisque}");
     ui->secondSettingTab->setStyleSheet("QGroupBox{background:wheat}");
     ui->exportPushButton->setStyleSheet("QPushButton{background:aquamarine}");
+
     //ui->generatePushButton->setStyleSheet("QPushButton{background:hotpink}");
     QPushButton *db = ui->centralWidget->findChild<QPushButton *>("generatePushButton"); //使用字符串关联到到控件
     db->setStyleSheet("QPushButton{background:hotpink}");
@@ -111,7 +144,7 @@ void ConfigTool::on_generatePushButton_clicked()
     INI_LIBCONFIG_CTRL *plibConfigIniTmp;
 
     QCacheMapLib::iterator it;
-    for(it = mapLib.begin(); it != mapLib.end(); ++it)
+    for (it = mapLib.begin(); it != mapLib.end(); ++it)
     {
         plibConfigIniTmp = it.value();
         plibConfigIniTmp->value[2] = (ui->centralWidget->findChild<QCheckBox *>(it.key())->checkState() == 2 ? "true" : "false");

@@ -32,7 +32,8 @@ public:
     explicit ConfigTool(QWidget *parent = 0);
     ~ConfigTool();
     DataCache Cache;
-    QCacheMapLib mapLib;
+    QCacheMapLib   mapLib;    //libconfig.ini map数据缓存区
+    QCacheMapConfg mapConfig; //config.ini   map数据缓存区
 
     BOOL m_bCharge;
     BOOL m_bSchedule;
@@ -58,13 +59,10 @@ public:
     void updateData(uchar);
 
 private slots:
-    void on_keyTranslatePushButton_clicked();
     void on_actionAbout_triggered();
-
-    void on_generatePushButton_clicked();
-
     void on_screenCheckBox_clicked();
-
+    void on_generatePushButton_clicked();
+    void on_keyTranslatePushButton_clicked();
     void on_screenSinglePileCheckBox_clicked();
 
 private:
