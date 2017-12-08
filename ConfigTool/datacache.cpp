@@ -12,6 +12,10 @@
 #include <QSettings>
 #include <QDebug>
 #include <string>
+#include <array>
+
+
+/*----------------------------定义变量---------------------------*/
 
  /* 功能模块-- UI中CheckBox控件的名称 */
  // "settingCheckBox"  , "updateCheckBox"          , "realDataCheckBox"  ,
@@ -69,30 +73,38 @@ const QString strFirstWidgetName[] = {
     "directLineEdit"         , "singleLineEdit"              , "threeLineEdit"                 ,
     "passwordLineEdit"       , "teuiTypeComboBox"            , "boardComboBox"                 ,  // 0-5  : CSCU系统配置
 
-    "cardTypeComboBox"       , "vinTypeComboBox"             , "AbnormalOpenRadioButton"       ,
-    "cardAutoOpenRadioButton", "vinAutoOpenRadioButton"      , "buttonOpenRadioButton"         ,
-    "ticketOpenRadioButton"  , "cardMultiOpenRadioButton"    , "singlePileGroupOpenRadioButton",  // 6-14 : 充电服务配置
+    "cardTypeComboBox"       , "vinTypeComboBox"             , "AbnormalRadioButton"           ,
+    "cardAutoRadioButton"    , "vinAutoRadioButton"          , "localButtonRadioButton"        ,
+    "ticketRadioButton"      , "cardMultiRadioButton"        , "singlePileGroupRadioButton"    ,  // 6-14 : 充电服务配置
 
     "net1IpLineEdit"         , "net1MaskLineEdit"            , "net1GateLineEdit"              ,
     "net2IPLineEdit"         , "net2MaskLineEdit"            , "net2GateLineEdit"              ,
     "dnsLineEdit"            ,                                                                     //15-21 : 网络配置
 
     "can0AddrLineEdit"       , "can0BaudLineEdit"            ,
-    "can1AddrLineEdit"       , "can1BaudLineEdit"            ,                                     //22-25 : can
+    "can1AddrLineEdit"       , "can1BaudLineEdit"            ,                                     //22-25 : can配置
 
-    "remoteKeyLineEdit"      , "remoteEncryptOpenRadioButton", "remoteIpLineEdit"              ,
+    "remoteKeyLineEdit"      , "remoteEncryptRadioButton"    , "remoteIpLineEdit"              ,
     "remotePortLineEdit"     , "remoteStationLineEdit"       ,                                     //26-30 : 云平台服务配置
 
-    "localKeyLineEdit"       , "localEncryptOpenRadioButton" , "localIpLineEdit"               ,
+    "localKeyLineEdit"       , "localEncryptRadioButton"     , "localIpLineEdit"               ,
     "localPortLineEdit"      , "localStationLineStation"     ,                                     //31-35 : 场站平台服务配置
 
     "webUrlComboBox"         , "webPortLineEdit"             , "dataSecretLineEdit"            ,
     "webAesKeyLineEdit"      , "webAesIVLineEdit"            , "OperatorIdLineEdit"            ,
     "operatorSecretLineEdit" ,                                                                     //36-42 : web平台服务器配置
+
+    "chargeTypeComboBox"     , "localChargeTypeComboBox"     , "localChargePasswordLineEdit"   ,   //43-45 : 充电模式设置
+
+    "lightOpenCheckBox"      , "lightOpenHourComboBox"       , "lightOpenMinuteComboBox"       ,
+    "lightCloseHourComboBox" , "lightCloseMinuteComboBox"    ,                                     //46-50 : 灯条参数设置
+
+    "outageByDoorCheckBox"   ,                                                                     //51    : 开门断电设置
     };
 
 /* 控件对应的类型 QCheckBox;QLineEdit;QComboBox;QRadioButton; */
-const int widgetType[] ={
+//const int widgetType[] ={
+const  std::array<int, 52> widgetType ={
     LINEEDIT_TYPE   , LINEEDIT_TYPE   , LINEEDIT_TYPE   ,
     LINEEDIT_TYPE   , COMBOBOX_TYPE   , COMBOBOX_TYPE   ,   //0-5  : CSCU系统配置
 
@@ -115,16 +127,16 @@ const int widgetType[] ={
 
     COMBOBOX_TYPE   , LINEEDIT_TYPE   , LINEEDIT_TYPE   ,
     LINEEDIT_TYPE   , LINEEDIT_TYPE   , LINEEDIT_TYPE   ,
-    LINEEDIT_TYPE                                           //36-42 : web平台服务器配置
+    LINEEDIT_TYPE   ,                                       //36-42 : web平台服务器配置
+
+    COMBOBOX_TYPE   , COMBOBOX_TYPE   , LINEEDIT_TYPE   ,   //43-45 : 充电模式设置
+
+    CHECKBOX_TYPE   , COMBOBOX_TYPE   , COMBOBOX_TYPE   ,
+    COMBOBOX_TYPE   , COMBOBOX_TYPE   ,                     //46-50 : 灯条参数设置
+
+    CHECKBOX_TYPE   ,                                       //51    : 开门断电设置
                     };
 
-#if 0
-array<int, 4> type = {
-    CHECKBOX_TYPE,
-    LINEEDIT_TYPE,
-    COMBOBOX_TYPE,
-    RADIOBUTTON_TYPE };
-#endif
 
 /* 配置选项一 config.ini 中对应的文本信息:section/key */
 const QString strFirstKeyName[] = {
@@ -151,6 +163,14 @@ const QString strFirstKeyName[] = {
     "WEBSERVER/AesKey"                    , "WEBSERVER/AesIV"                   , "WEBSERVER/OperatorID"               ,
     "WEBSERVER/OperatorSecret"            ,                                                                                //web平台服务器配置
 
+    "SINGLEPILESys/MasterMode"            , "SINGLEPILESys/SlaveMode"           , "SINGLEPILESys/PwdCharge"            ,   //充电模式参数设置
+
+    "LIGHTSETTING/lightcontrol_enable"    , "LIGHTSETTING/lightopentime_hour"   , "LIGHTSETTING/lightopentime_minute"  ,
+    "LIGHTSETTING/lightclosetime_hour"    , "LIGHTSETTING/lightclosetime_minute",                                          //灯条参数设置
+
+    "MAGNETICSWITCH/bOpenDoorPowerOutages",                                                                                //开门断电
+
+
     "POWER_LIMIT/PowerLimit_Enable"       , "POWER_LIMIT/CCUCount"              , "POWER_LIMIT/StationLimitPower"      ,
     "POWER_LIMIT/SafeLimitPower"          , "POWER_LIMIT/SumPower_Manual"       , "POWER_LIMIT/SumPower_Ammeter_Enable",
     "POWER_LIMIT/SumPower_Server_Enable"  , "POWER_LIMIT/SumPower_Manual_Enable",
@@ -162,43 +182,44 @@ const QString strFirstKeyName[] = {
     "IOIN/DIN4"                           , "IOIN/DIN5"                         , "IOIN/DIN6"                          ,
     "IOIN/DIN7"                           , "IOIN/DIN8"                         , "IOIN/DIN9"                          ,
     "IOIN/DIN10"                          ,
-
-    "SINGLEPILESys/MasterMode"            , "SINGLEPILESys/SlaveMode"           , "SINGLEPILESys/PwdCharge"            ,
-
-    "LIGHTSETTING/lightcontrol_enable"    , "LIGHTSETTING/lightopentime_hour"   , "LIGHTSETTING/lightopentime_minute"  ,
-    "LIGHTSETTING/lightclosetime_hour"    , "LIGHTSETTING/lightclosetime_minute",
-
-    "MAGNETICSWITCH/bOpenDoorPowerOutages"
     };
+
 
  /* 配置选项一 config.ini 中对应的文本信息:section/val */
 const QString strFirstValue[] = {
-    ""                    , ""                , ""                    ,  // 0-2: 直流终端数量，单相终端数量，三相终端数量
-    "300001"              , "1"               , "2"                   ,  // 3-5: 设置密码，交互类型，底板类型
-    "2"                   , "3"               , "0"                   ,  // 6-8: 卡片类型，车牌号/VIN,异常电量过滤
-    "0"                   , "0"               , "1"                   ,  // 9-11: 刷卡触发充电，VIN触发充电，结束充电按钮
-    "0"                   , "0"               , "0"                   ,  // 12-14: 打印小票，刷卡多选模式，单桩群充模式
+    ""                     , ""                     , ""                    ,  // 0-2: 直流终端数量，单相终端数量，三相终端数量
+    "300001"               , "1"                    , "2"                   ,  // 3-5: 设置密码，交互类型，底板类型
+    "2"                    , "3"                    , "0"                   ,  // 6-8: 卡片类型，车牌号/vin,异常电量过滤
+    "0"                    , "0"                    , "1"                   ,  // 9-11: 刷卡触发充电，vin触发充电，结束充电按钮
+    "0"                    , "0"                    , "0"                   ,  // 12-14: 打印小票，刷卡多选模式，单桩群充模式
 
-    ""                    , ""                , ""                    ,  //网口1IP地址，网口1子网掩码，网口1网关
-    ""                    , ""                , ""                    ,  //网口2IP地址，网口2子网掩码，网口2网关
-    ""                    ,                                              //DNS
+    ""                     , ""                     , ""                    ,  //网口1ip地址，网口1子网掩码，网口1网关
+    ""                     , ""                     , ""                    ,  //网口2ip地址，网口2子网掩码，网口2网关
+    ""                     ,                                                   //dns
 
-    "250"                 , "100000"          ,                          //can0配置
-    "250"                 , "100000"          ,                          //can1配置
+    "250"                  , "100000"               ,                          //can0配置
+    "250"                  , "100000"               ,                          //can1配置
 
-    "41414141414141414141414141414141", "true", "comm.teld.cn"        ,
-    "8867"                , ""                ,                          //云平台服务器配置
+    "41414141414141414141414141414141", "true"      , "comm.teld.cn"        ,
+    "8867"                 , ""                     ,                          //云平台服务器配置
 
-    "41414141414141414141414141414141", "true", "comm.teld.cn"        ,
-    "8867"                , ""                ,                          //场站平台服务器配置
+    "41414141414141414141414141414141", "true"      , "comm.teld.cn"        ,
+    "8867"                 , ""                     ,                          //场站平台服务器配置
 
-    "https://ctrl.teld.cn", "443"             , "h9ZJ8nevVWdNVcfD"    ,
-    "0iyYbIL6h33WIafh"    , "TqwJM4NhCGzmCeda", "teldrml5alnrv6zuyk7k",
-    "eSD2fHUcwPzn1MY2"                                                   //web平台服务器配置
+    "https://ctrl.teld.cn" , "443"                  , "h9zj8nevvwdnvcfd"    ,
+    "0iyybil6h33wiafh"     , "tqwjm4nhcgzmceda"     , "teldrml5alnrv6zuyk7k",
+    "esd2fhucwpzn1my2"     ,                                                   //web平台服务器配置
+
+    "1"                    , "0"                    , "100003"              ,  //充电模式参数设置
+
+    "false"                , "18"                   , "0"                   ,
+    "6"                    , "0"                    ,                          //灯条参数设置
+
+    "false"                ,                                                   //开门断电
 };
 
 
-/**-------------------------------代码----------------------------------------**/
+/**-------------------------------代码实现部分----------------------------------------**/
 
 QCacheMapLib   dataCacheMapLib;    //libconfig.ini文件的 map数据缓冲区
 QCacheMapConfg dataCacheMapConfig; //config.ini文件的 map数据缓冲区
@@ -214,7 +235,9 @@ DataCache::DataCache(QObject *parent) : QObject(parent)
 {
     INI_LIBCONFIG_CTRL *plibConfigIni;   //libconfig.ini
 
-    for (uint i=0; i < sizeof(strWidgetNameLib)/(sizeof(QString)); i++) //sizeof(strWidgetNameLib)/(sizeof(QString)):功能模块控件的数量
+
+    /* sizeof(strWidgetNameLib)/(sizeof(QString)):功能模块控件的数量 */
+    for (uint i=0; i < sizeof(strWidgetNameLib)/(sizeof(QString)); i++)
     {
         plibConfigIni = new  INI_LIBCONFIG_CTRL;
 
@@ -234,7 +257,9 @@ DataCache::DataCache(QObject *parent) : QObject(parent)
 
      /* config.ini 初始化 */
     INI_CONFIG_CTRL    *pconfigIni;     //config.ini
-    for (uint j=0; j < sizeof(strFirstWidgetName)/(sizeof(QString)); j++) //sizeof(strWidgetNameLib)/(sizeof(QString)):功能模块控件的数量
+
+     /* sizeof(strWidgetNameLib)/(sizeof(QString)):功能模块控件的数量 */
+    for (uint j=0; j < sizeof(strFirstWidgetName)/(sizeof(QString)); j++)
     {
         pconfigIni = new INI_CONFIG_CTRL;
 
@@ -245,7 +270,6 @@ DataCache::DataCache(QObject *parent) : QObject(parent)
 
         dataCacheMapConfig.insert(strFirstWidgetName[j], pconfigIni); //对应的数据映射到dataCacheMapLib
     }
-
 }
 
 /**********************************************************************
@@ -264,7 +288,6 @@ QCacheMapConfg DataCache::configIniReadCache()
     for (it = dataCacheMapConfig.begin(); it != dataCacheMapConfig.end(); ++it)
     {
         pconfigIniTmp = it.value();
-
         pconfigIniTmp->value = configIniRead->value(pconfigIniTmp->settingName, pconfigIniTmp->value).toString();
 
         //dataCacheMapConfig[it.key()] = pconfigIniTmp; //使用结构体指针不需要这个赋值。更新map数据
@@ -298,7 +321,6 @@ void DataCache::configIniWriteCache(QCacheMapConfg cacheMapConfg)
     delete configIniWrite;
 }
 
-
 /**********************************************************************
 * 功    能： 读libconfig.ini,存入缓存区map(dataCacheMapLib)
 * 输    入：
@@ -318,7 +340,8 @@ QCacheMapLib DataCache::libConfigIniReadCache()
         plibConfigIniTmp = it.value();
         for (int i=0; i<3; i++)
         {
-            plibConfigIniTmp->value[i] = configIniRead->value(plibConfigIniTmp->settingName[i], plibConfigIniTmp->value[i]).toString();
+            plibConfigIniTmp->value[i] = configIniRead->value(plibConfigIniTmp->settingName[i],
+                                                              plibConfigIniTmp->value[i]).toString();
         }
 
         //dataCacheMapLib[it.key()] = plibConfigIniTmp; //使用结构体指针不需要这个赋值。更新map数据

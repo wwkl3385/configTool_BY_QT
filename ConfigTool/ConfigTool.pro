@@ -27,16 +27,19 @@ SOURCES += \
         configtool.cpp \
     translatedlg.cpp \
     datacache.cpp \
-    main.cpp
+    main.cpp \
+    cfcddlg.cpp
 
 HEADERS += \
         configtool.h \
     translatedlg.h \
-    datacache.h
+    datacache.h \
+    cfcddlg.h
 
 FORMS   += \
         configtool.ui \
-    translatedlg.ui
+    translatedlg.ui \
+    cfcddlg.ui
 
 RESOURCES += \
     configtoolicon.qrc

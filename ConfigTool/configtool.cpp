@@ -32,6 +32,26 @@ ConfigTool::ConfigTool(QWidget *parent) :
     ui->DatabaseCheckBox->setDisabled(true);
     ui->logCheckBox->setDisabled(true);
 
+    /*  设置界面 灯条时间 选项 赋值 */
+    for (int i=0; i<24; i++)
+    {
+        ui->lightOpenHourComboBox->insertItem(i, QString::number(i, 10));  //0-23 时
+        ui->lightCloseHourComboBox->insertItem(i, QString::number(i, 10)); //0-23 时
+    }
+    for (int i=0; i<60; i++)
+    {
+        ui->lightOpenMinuteComboBox->insertItem(i, QString::number(i, 10));   //0-59 秒
+        ui->lightCloseMinuteComboBox->insertItem(i, QString::number(i, 10));  //0-59 秒
+
+    }
+
+    /* 充电模式 ui 按钮控制  充电模式为远程充电时*/
+    if (ui->chargeTypeComboBox->currentIndex() == 0)
+    {
+        ui->localChargeTypeComboBox->setDisabled(true);
+        ui->localChargePasswordLineEdit->setDisabled(true);
+    }
+
     /*libconfig.ini 读缓存区数据，写入控件*/
     mapLib = Cache.libConfigIniReadCache(); //maplib初始化为缓存区数据。
     QCacheMapLib::iterator its;
@@ -49,42 +69,53 @@ ConfigTool::ConfigTool(QWidget *parent) :
     {
         INI_CONFIG_CTRL *configIni;
         configIni = it.value();
+
         if (configIni->ctlType == LINEEDIT_TYPE)
             ui->centralWidget->findChild<QLineEdit *>(it.key())->setText(configIni->value);
-        if (configIni->ctlType == RADIOBUTTON_TYPE)
-        {
-            ui->centralWidget->findChild<QRadioButton *>(it.key())->setChecked((configIni->value == "1" ? true : false)  \
-                                                                               | (configIni->value == "true" ? true : false));
-
-            /* 互斥按钮处理 */
-            if ((it.key() == "AbnormalOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-                ui->centralWidget->findChild<QRadioButton *>("AbnormalCloseRadioButton")->setChecked(true);
-            if ((it.key() == "buttonOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-                ui->centralWidget->findChild<QRadioButton *>("buttonCloseRadioButton")->setChecked(true);
-            if ((it.key() == "cardAutoOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-                ui->centralWidget->findChild<QRadioButton *>("cardAutoCloseRadioButton")->setChecked(true);
-            if ((it.key() == "cardMultiOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-                ui->centralWidget->findChild<QRadioButton *>("cardMultiCloseRadioButton")->setChecked(true);
-            if ((it.key() == "localEncryptOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-                ui->centralWidget->findChild<QRadioButton *>("localEncryptCloseRadioButton")->setChecked(true);
-            if ((it.key() == "remoteEncryptOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-                ui->centralWidget->findChild<QRadioButton *>("remoteEncryptCloseRadioButton")->setChecked(true);
-            if ((it.key() == "singlePileGroupOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-                ui->centralWidget->findChild<QRadioButton *>("singlePileGroupCloseRadioButton")->setChecked(true);
-            if ((it.key() == "ticketOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-                ui->centralWidget->findChild<QRadioButton *>("ticketCloseRadioButton")->setChecked(true);
-            if ((it.key() == "vinAutoOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-                ui->centralWidget->findChild<QRadioButton *>("vinAutoCloseRadioButton")->setChecked(true);
-        }
 
         if (configIni->ctlType == COMBOBOX_TYPE)
         {
-           if (configIni->value.length() > 3) //过滤不同类型的值
-           {
-               ui->centralWidget->findChild<QComboBox *>(it.key())->setCurrentText(configIni->value);
-               continue;
-           }
-           ui->centralWidget->findChild<QComboBox *>(it.key())->setCurrentIndex(configIni->value.toInt() - 1);
+            /*  过滤不同类型的值 --服务器地址 灯条时间  */
+            if ((configIni->value.length() > 3) || (it.key() == "lightOpenHourComboBox") || (it.key() == "lightCloseHourComboBox")
+                    || (it.key() == "lightOpenMinuteComboBox") || (it.key() == "lightCloseMinuteComboBox"))
+            {
+                ui->centralWidget->findChild<QComboBox *>(it.key())->setCurrentText(configIni->value);
+                continue;
+            }
+            ui->centralWidget->findChild<QComboBox *>(it.key())->setCurrentIndex(configIni->value.toInt() - 1);
+        }
+
+        if (configIni->ctlType == RADIOBUTTON_TYPE)
+        {
+            bool b = ((configIni->value == "1" ? true : false) || (configIni->value == "true" ? true : false)) ? true : false;
+
+            ui->centralWidget->findChild<QRadioButton *>(it.key() + "Open")->setChecked(b);
+            ui->centralWidget->findChild<QRadioButton *>(it.key() + "Close")->setChecked(!b);
+
+            //            /* 互斥按钮处理  */
+            //            if ((it.key() == "AbnormalOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+            //                ui->centralWidget->findChild<QRadioButton *>("AbnormalCloseRadioButton")->setChecked(true);
+            //            if ((it.key() == "buttonOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+            //                ui->centralWidget->findChild<QRadioButton *>("buttonCloseRadioButton")->setChecked(true);
+            //            if ((it.key() == "cardAutoOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+            //                ui->centralWidget->findChild<QRadioButton *>("cardAutoCloseRadioButton")->setChecked(true);
+            //            if ((it.key() == "cardMultiOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+            //                ui->centralWidget->findChild<QRadioButton *>("cardMultiCloseRadioButton")->setChecked(true);
+            //            if ((it.key() == "localEncryptOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+            //                ui->centralWidget->findChild<QRadioButton *>("localEncryptCloseRadioButton")->setChecked(true);
+            //            if ((it.key() == "remoteEncryptOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+            //                ui->centralWidget->findChild<QRadioButton *>("remoteEncryptCloseRadioButton")->setChecked(true);
+            //            if ((it.key() == "singlePileGroupOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+            //                ui->centralWidget->findChild<QRadioButton *>("singlePileGroupCloseRadioButton")->setChecked(true);
+            //            if ((it.key() == "ticketOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+            //                ui->centralWidget->findChild<QRadioButton *>("ticketCloseRadioButton")->setChecked(true);
+            //            if ((it.key() == "vinAutoOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
+            //                ui->centralWidget->findChild<QRadioButton *>("vinAutoCloseRadioButton")->setChecked(true);
+        }
+
+        if (configIni->ctlType == CHECKBOX_TYPE)
+        {
+            ui->centralWidget->findChild<QCheckBox *>(it.key())->setChecked(configIni->value == "true" ? true : false);
         }
     }
 
@@ -121,18 +152,7 @@ ConfigTool::~ConfigTool()
     delete ui;
 }
 
-/**********************************************************************
-* 功    能：秘钥转换按钮
-* 输    入：
-* 输    出：
-* 作    者：刘卫明
-* 编写日期：2017.11.24
-***********************************************************************/
-void ConfigTool::on_keyTranslatePushButton_clicked()
-{
-    translateDlg dlg;
-    dlg.exec();
-}
+
 
 /**********************************************************************
 * 功    能：菜单-帮助，提示信息
@@ -157,7 +177,7 @@ void ConfigTool::on_actionAbout_triggered()
 void ConfigTool::on_generatePushButton_clicked()
 {
 
-    /* libconfig.ini*/
+    /* 写libconfig.ini*/
     QCacheMapLib::iterator its;
     for (its = mapLib.begin(); its != mapLib.end(); ++its)
     {
@@ -168,8 +188,7 @@ void ConfigTool::on_generatePushButton_clicked()
 
     Cache.libConfigIniWriteCache(mapLib);
 
-    /*config.ini*/
-
+    /* 写config.ini*/
     QCacheMapConfg::iterator it;
     for (it = mapConfig.begin(); it != mapConfig.end(); ++it)
     {
@@ -181,17 +200,17 @@ void ConfigTool::on_generatePushButton_clicked()
 
         if (configIni->ctlType == RADIOBUTTON_TYPE)
         {
-            configIni->value = (ui->centralWidget->findChild<QRadioButton *>(it.key())->isChecked() == 0 ? "0" : "1");
+            configIni->value = (ui->centralWidget->findChild<QRadioButton *>(it.key() + "Open")->isChecked() == 0 ? "0" : "1");
 
             /* 特殊按钮处理 */
-
-            if ((it.key() == "localEncryptOpenRadioButton") | (it.key() == "remoteEncryptOpenRadioButton"))
+            if ((it.key() == "localEncryptRadioButton") | (it.key() == "remoteEncryptRadioButton"))
                     configIni->value = (configIni->value == "1" ? "true" : "false");
          }
 
         if (configIni->ctlType == COMBOBOX_TYPE)
         {
-            if (it.key() == "webUrlComboBox")
+            if (it.key() == ("webUrlComboBox") || (it.key() ==  "lightOpenHourComboBox") || (it.key() ==  "lightCloseHourComboBox")
+                    || (it.key() == "lightOpenMinuteComboBox" ) || (it.key() == "lightCloseMinuteComboBox"))
             {
                configIni->value = ui->centralWidget->findChild<QComboBox *>(it.key())->currentText();
             }
@@ -200,9 +219,17 @@ void ConfigTool::on_generatePushButton_clicked()
                 configIni->value = QString::number((ui->centralWidget->findChild<QComboBox *>(it.key())->currentIndex()) + 1, 10); //整型转为对应的字符串。
             }
         }
+
+        if (configIni->ctlType == CHECKBOX_TYPE)
+        {
+            configIni->value = (ui->centralWidget->findChild<QCheckBox *>(it.key())->checkState() == 2 ? "true" : "false");
+        }
     }
 
     Cache.configIniWriteCache(mapConfig);
+
+    QMessageBox::information(this, "提示", "配置文件生成成功！");
+
 }
 
 /**********************************************************************
@@ -229,10 +256,53 @@ void ConfigTool::on_screenSinglePileCheckBox_clicked()
     ui->screenCheckBox->setChecked(false);   //显示屏与显示屏-直流单桩按钮 互斥操作
 }
 
+/**********************************************************************
+* 功    能： 服务器地址与对应端口号
+* 输    入：
+* 输    出：
+* 作    者：
+* 编写日期：2017.12.8
+***********************************************************************/
 void ConfigTool::on_webUrlComboBox_currentTextChanged(const QString &arg1)
 {
    if ( arg1 == "http://api.teld.cn")
        ui->webPortLineEdit->setText("8001");
    if (arg1 == "https://ctrl.teld.cn")
        ui->webPortLineEdit->setText("443");
+}
+
+/**********************************************************************
+* 功    能：充电模式控件ui -显示处理函数
+* 输    入：
+* 输    出：
+* 作    者：
+* 编写日期：2017.12.8
+***********************************************************************/
+void ConfigTool::on_chargeTypeComboBox_currentIndexChanged(int index)
+{
+    if (index == 0)
+    {
+        ui->localChargeTypeComboBox->setCurrentIndex(-1);
+        ui->localChargeTypeComboBox->setDisabled(true);
+        ui->localChargePasswordLineEdit->setDisabled(true);
+    }
+    else
+    {
+        ui->localChargeTypeComboBox->setCurrentIndex(0);
+        ui->localChargeTypeComboBox->setEnabled(true);
+        ui->localChargePasswordLineEdit->setEnabled(true);
+    }
+}
+
+/**********************************************************************
+* 功    能：秘钥转换按钮
+* 输    入：
+* 输    出：
+* 作    者：刘卫明
+* 编写日期：2017.11.24
+***********************************************************************/
+void ConfigTool::on_keyTranslatePushButton_clicked()
+{
+    translateDlg dlg;
+    dlg.exec();
 }

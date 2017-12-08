@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>60</y>
-      <width>806</width>
+      <width>848</width>
       <height>640</height>
      </rect>
     </property>
@@ -42,7 +42,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="moduleTab">
      <attribute name="title">
@@ -496,7 +496,7 @@
            <number>0</number>
           </property>
           <item row="0" column="0">
-           <widget class="QRadioButton" name="ticketOpenRadioButton">
+           <widget class="QRadioButton" name="ticketRadioButtonOpen">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -508,7 +508,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QRadioButton" name="ticketCloseRadioButton">
+           <widget class="QRadioButton" name="ticketRadioButtonClose">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -516,6 +516,9 @@
             </property>
             <property name="text">
              <string>关闭</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -544,7 +547,7 @@
            <number>0</number>
           </property>
           <item row="0" column="0">
-           <widget class="QRadioButton" name="AbnormalOpenRadioButton">
+           <widget class="QRadioButton" name="AbnormalRadioButtonOpen">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -562,7 +565,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QRadioButton" name="AbnormalCloseRadioButton">
+           <widget class="QRadioButton" name="AbnormalRadioButtonClose">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -570,6 +573,9 @@
             </property>
             <property name="text">
              <string>关闭</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -804,7 +810,7 @@
            <number>0</number>
           </property>
           <item row="0" column="0">
-           <widget class="QRadioButton" name="vinAutoOpenRadioButton">
+           <widget class="QRadioButton" name="vinAutoRadioButtonOpen">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -816,7 +822,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QRadioButton" name="vinAutoCloseRadioButton">
+           <widget class="QRadioButton" name="vinAutoRadioButtonClose">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -824,6 +830,12 @@
             </property>
             <property name="text">
              <string>关闭</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -852,7 +864,7 @@
            <number>0</number>
           </property>
           <item row="0" column="0">
-           <widget class="QRadioButton" name="cardAutoOpenRadioButton">
+           <widget class="QRadioButton" name="cardAutoRadioButtonOpen">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -864,7 +876,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QRadioButton" name="cardAutoCloseRadioButton">
+           <widget class="QRadioButton" name="cardAutoRadioButtonClose">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -872,6 +884,9 @@
             </property>
             <property name="text">
              <string>关闭</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -903,7 +918,7 @@
            <number>0</number>
           </property>
           <item row="0" column="1">
-           <widget class="QRadioButton" name="cardMultiCloseRadioButton">
+           <widget class="QRadioButton" name="cardMultiRadioButtonClose">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -912,10 +927,13 @@
             <property name="text">
              <string>关闭</string>
             </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item row="0" column="0">
-           <widget class="QRadioButton" name="cardMultiOpenRadioButton">
+           <widget class="QRadioButton" name="cardMultiRadioButtonOpen">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -951,7 +969,7 @@
            <number>0</number>
           </property>
           <item row="0" column="1">
-           <widget class="QRadioButton" name="buttonCloseRadioButton">
+           <widget class="QRadioButton" name="localButtonRadioButtonClose">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -963,7 +981,7 @@
            </widget>
           </item>
           <item row="0" column="0">
-           <widget class="QRadioButton" name="buttonOpenRadioButton">
+           <widget class="QRadioButton" name="localButtonRadioButtonOpen">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -971,6 +989,9 @@
             </property>
             <property name="text">
              <string>开启</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -999,7 +1020,7 @@
            <number>0</number>
           </property>
           <item row="0" column="0">
-           <widget class="QRadioButton" name="singlePileGroupOpenRadioButton">
+           <widget class="QRadioButton" name="singlePileGroupRadioButtonOpen">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -1011,7 +1032,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QRadioButton" name="singlePileGroupCloseRadioButton">
+           <widget class="QRadioButton" name="singlePileGroupRadioButtonClose">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -1019,6 +1040,9 @@
             </property>
             <property name="text">
              <string>关闭</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1302,7 +1326,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QRadioButton" name="localEncryptOpenRadioButton">
+          <widget class="QRadioButton" name="localEncryptRadioButtonOpen">
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -1310,6 +1334,9 @@
            </property>
            <property name="text">
             <string>启动</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1327,7 +1354,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QRadioButton" name="localEncryptCloseRadioButton">
+          <widget class="QRadioButton" name="localEncryptRadioButtonClose">
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -1437,7 +1464,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QRadioButton" name="remoteEncryptOpenRadioButton">
+          <widget class="QRadioButton" name="remoteEncryptRadioButtonOpen">
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -1445,6 +1472,12 @@
            </property>
            <property name="text">
             <string>启动</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -1462,7 +1495,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QRadioButton" name="remoteEncryptCloseRadioButton">
+          <widget class="QRadioButton" name="remoteEncryptRadioButtonClose">
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -1887,6 +1920,9 @@
        </item>
        <item row="0" column="5">
         <widget class="QComboBox" name="localChargeTypeComboBox">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
          <property name="sizeAdjustPolicy">
           <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
          </property>
@@ -1904,6 +1940,9 @@
        </item>
        <item row="0" column="2">
         <widget class="QComboBox" name="chargeTypeComboBox">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
          <property name="sizeAdjustPolicy">
           <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
          </property>
@@ -1950,6 +1989,114 @@
        <string>灯条参数设置</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_19">
+       <item row="0" column="6">
+        <spacer name="horizontalSpacer_15">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Minimum</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>10</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="2">
+        <spacer name="horizontalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Minimum</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>78</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="5">
+        <layout class="QGridLayout" name="gridLayout_18">
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_55">
+           <property name="text">
+            <string>时</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="lightCloseMinuteComboBox">
+           <property name="maximumSize">
+            <size>
+             <width>51</width>
+             <height>27</height>
+            </size>
+           </property>
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLabel" name="label_56">
+           <property name="text">
+            <string>分</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_54">
+           <property name="text">
+            <string>灯条结束时间：</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="lightCloseHourComboBox">
+           <property name="maximumSize">
+            <size>
+             <width>51</width>
+             <height>27</height>
+            </size>
+           </property>
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+           <property name="maxVisibleItems">
+            <number>24</number>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <spacer name="horizontalSpacer_12">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Ignored</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
        <item row="0" column="4">
         <spacer name="horizontalSpacer_8">
          <property name="orientation">
@@ -2009,24 +2156,12 @@
            <property name="editable">
             <bool>true</bool>
            </property>
+           <property name="maxVisibleItems">
+            <number>24</number>
+           </property>
            <property name="sizeAdjustPolicy">
             <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
            </property>
-           <item>
-            <property name="text">
-             <string>18</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>23</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>1</string>
-            </property>
-           </item>
           </widget>
          </item>
          <item>
@@ -2050,11 +2185,6 @@
            <property name="sizeAdjustPolicy">
             <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
            </property>
-           <item>
-            <property name="text">
-             <string>30</string>
-            </property>
-           </item>
           </widget>
          </item>
          <item>
@@ -2066,168 +2196,25 @@
          </item>
         </layout>
        </item>
-       <item row="0" column="5">
-        <layout class="QGridLayout" name="gridLayout_18">
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_55">
-           <property name="text">
-            <string>时</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QComboBox" name="lightCloseMinuteComboBox">
-           <property name="maximumSize">
-            <size>
-             <width>51</width>
-             <height>27</height>
-            </size>
-           </property>
-           <property name="editable">
-            <bool>true</bool>
-           </property>
-           <property name="sizeAdjustPolicy">
-            <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
-           </property>
-           <item>
-            <property name="text">
-             <string>00</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QLabel" name="label_56">
-           <property name="text">
-            <string>分</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_54">
-           <property name="text">
-            <string>灯条结束时间：</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="lightCloseHourComboBox">
-           <property name="maximumSize">
-            <size>
-             <width>51</width>
-             <height>27</height>
-            </size>
-           </property>
-           <property name="editable">
-            <bool>true</bool>
-           </property>
-           <property name="sizeAdjustPolicy">
-            <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
-           </property>
-           <item>
-            <property name="text">
-             <string>8</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>23</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <spacer name="horizontalSpacer_12">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Ignored</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item row="0" column="2">
-        <spacer name="horizontalSpacer_9">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Minimum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>78</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="6">
-        <spacer name="horizontalSpacer_15">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Minimum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>10</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </widget>
      <widget class="QGroupBox" name="otherGroupBox">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>200</y>
+        <y>290</y>
         <width>781</width>
-        <height>141</height>
+        <height>106</height>
        </rect>
       </property>
       <property name="title">
        <string>其他      配置</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_20">
-       <item row="0" column="0">
-        <spacer name="horizontalSpacer_13">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Maximum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="cfcdPushButton">
+       <item row="1" column="1">
+        <widget class="QPushButton" name="ammeterRangeSetPushButton">
          <property name="text">
-          <string>错峰充电配置</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QPushButton" name="relaySettingPushButton">
-         <property name="text">
-          <string>继电器设置</string>
+          <string>电表量程设置</string>
          </property>
         </widget>
        </item>
@@ -2242,34 +2229,6 @@
         <widget class="QPushButton" name="fhysPushButton">
          <property name="text">
           <string>负荷约束配置</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4">
-        <widget class="QPushButton" name="phasePushButton">
-         <property name="text">
-          <string>单相相别配置</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="5">
-        <widget class="QPushButton" name="environmentPushButton">
-         <property name="text">
-          <string>子站环境配置</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QPushButton" name="multiGunPushButton">
-         <property name="text">
-          <string>多枪设置</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="ammeterRangeSetPushButton">
-         <property name="text">
-          <string>电表量程设置</string>
          </property>
         </widget>
        </item>
@@ -2296,7 +2255,84 @@
          </property>
         </spacer>
        </item>
+       <item row="1" column="4">
+        <widget class="QPushButton" name="multiGunPushButton">
+         <property name="text">
+          <string>多枪设置</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <spacer name="horizontalSpacer_13">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="5">
+        <widget class="QPushButton" name="environmentPushButton">
+         <property name="text">
+          <string>子站环境配置</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="cfcdPushButton">
+         <property name="text">
+          <string>错峰充电配置</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QPushButton" name="phasePushButton">
+         <property name="text">
+          <string>单相相别配置</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QPushButton" name="relaySettingPushButton">
+         <property name="text">
+          <string>继电器设置</string>
+         </property>
+        </widget>
+       </item>
       </layout>
+     </widget>
+     <widget class="QGroupBox" name="openDoorGroupBox">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>200</y>
+        <width>781</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>开门断电配置</string>
+      </property>
+      <widget class="QCheckBox" name="outageByDoorCheckBox">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>40</y>
+         <width>101</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>开启开门断电</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>
@@ -2477,20 +2513,20 @@
   <tabstop>can1BaudLineEdit</tabstop>
   <tabstop>cardTypeComboBox</tabstop>
   <tabstop>vinTypeComboBox</tabstop>
-  <tabstop>AbnormalOpenRadioButton</tabstop>
-  <tabstop>AbnormalCloseRadioButton</tabstop>
-  <tabstop>cardAutoOpenRadioButton</tabstop>
-  <tabstop>cardAutoCloseRadioButton</tabstop>
-  <tabstop>vinAutoOpenRadioButton</tabstop>
-  <tabstop>vinAutoCloseRadioButton</tabstop>
-  <tabstop>buttonOpenRadioButton</tabstop>
-  <tabstop>buttonCloseRadioButton</tabstop>
-  <tabstop>ticketOpenRadioButton</tabstop>
-  <tabstop>ticketCloseRadioButton</tabstop>
-  <tabstop>cardMultiOpenRadioButton</tabstop>
-  <tabstop>cardMultiCloseRadioButton</tabstop>
-  <tabstop>singlePileGroupOpenRadioButton</tabstop>
-  <tabstop>singlePileGroupCloseRadioButton</tabstop>
+  <tabstop>AbnormalRadioButtonOpen</tabstop>
+  <tabstop>AbnormalRadioButtonClose</tabstop>
+  <tabstop>cardAutoRadioButtonOpen</tabstop>
+  <tabstop>cardAutoRadioButtonClose</tabstop>
+  <tabstop>vinAutoRadioButtonOpen</tabstop>
+  <tabstop>vinAutoRadioButtonClose</tabstop>
+  <tabstop>localButtonRadioButtonOpen</tabstop>
+  <tabstop>localButtonRadioButtonClose</tabstop>
+  <tabstop>ticketRadioButtonOpen</tabstop>
+  <tabstop>ticketRadioButtonClose</tabstop>
+  <tabstop>cardMultiRadioButtonOpen</tabstop>
+  <tabstop>cardMultiRadioButtonClose</tabstop>
+  <tabstop>singlePileGroupRadioButtonOpen</tabstop>
+  <tabstop>singlePileGroupRadioButtonClose</tabstop>
   <tabstop>net1IpLineEdit</tabstop>
   <tabstop>net1MaskLineEdit</tabstop>
   <tabstop>net1GateLineEdit</tabstop>
@@ -2499,8 +2535,8 @@
   <tabstop>net2GateLineEdit</tabstop>
   <tabstop>dnsLineEdit</tabstop>
   <tabstop>localKeyLineEdit</tabstop>
-  <tabstop>localEncryptOpenRadioButton</tabstop>
-  <tabstop>localEncryptCloseRadioButton</tabstop>
+  <tabstop>localEncryptRadioButtonOpen</tabstop>
+  <tabstop>localEncryptRadioButtonClose</tabstop>
   <tabstop>localIpLineEdit</tabstop>
   <tabstop>localPortLineEdit</tabstop>
   <tabstop>localStationLineStation</tabstop>
@@ -2511,8 +2547,8 @@
   <tabstop>webPortLineEdit</tabstop>
   <tabstop>dataSecretLineEdit</tabstop>
   <tabstop>remoteKeyLineEdit</tabstop>
-  <tabstop>remoteEncryptOpenRadioButton</tabstop>
-  <tabstop>remoteEncryptCloseRadioButton</tabstop>
+  <tabstop>remoteEncryptRadioButtonOpen</tabstop>
+  <tabstop>remoteEncryptRadioButtonClose</tabstop>
   <tabstop>remoteIpLineEdit</tabstop>
   <tabstop>remotePortLineEdit</tabstop>
   <tabstop>remoteStationLineEdit</tabstop>
