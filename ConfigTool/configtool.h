@@ -67,6 +67,8 @@ private slots:
     void on_webUrlComboBox_currentTextChanged(const QString &arg1);
     void on_chargeTypeComboBox_currentIndexChanged(int index);
 
+    void on_cfcdPushButton_clicked();
+
 private:
     Ui::ConfigTool *ui;
 

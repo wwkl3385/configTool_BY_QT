@@ -11,6 +11,7 @@
 #include "datacache.h"
 #include "ui_configtool.h"
 #include "translatedlg.h"
+#include "cfcddlg.h"
 #include <QDebug>
 #include <qnamespace.h>
 #include <QMessageBox>
@@ -304,5 +305,11 @@ void ConfigTool::on_chargeTypeComboBox_currentIndexChanged(int index)
 void ConfigTool::on_keyTranslatePushButton_clicked()
 {
     translateDlg dlg;
+    dlg.exec();
+}
+
+void ConfigTool::on_cfcdPushButton_clicked()
+{
+    CFCDDlg dlg;
     dlg.exec();
 }
