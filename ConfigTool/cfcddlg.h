@@ -1,31 +1,31 @@
-/***********************************************************************
-* Copyright (c) 2017, 青岛特来电新能源有限公司  All rights reserved.
-*
-* 文件名称： cfcddlg.h
-* 描    述： 错峰充电配置
-* 修改记录：
-* 			V0.6，2017-12-8，创建，刘卫明
-*
-***********************************************************************/
 #ifndef CFCDDLG_H
 #define CFCDDLG_H
 
-#include<QDialog>
+#include <QDialog>
+#include "datacache.h"
 
 namespace Ui {
-class CFCDDlg;
+class cfcdDlg;
 }
 
-class CFCDDlg : public QDialog
+class cfcdDlg : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit CFCDDlg(QDialog *parent = 0);
-    ~CFCDDlg();
+    explicit cfcdDlg(QWidget *parent = 0);
+    ~cfcdDlg();
+
+    DataCache        Cache;
+    QCacheMapConfg   mapConfig;    //config.ini map数据缓存区
+
+private slots:
+    void on_CFCDEnableCheckBox_clicked(bool checked);
+
+    void on_CFCDSavePushButton_clicked();
 
 private:
-    Ui::CFCDDlg *ui;
+    Ui::cfcdDlg *ui;
 };
 
 #endif // CFCDDLG_H

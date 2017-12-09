@@ -15,7 +15,6 @@
 #include <QMap>
 #include<array>
 
-//const uint MODULE_NUM =16; //功能模块控件的数量-有MODULE_NUM个配置选项
 
 /*UI控件类型的枚举*/
 typedef enum _WIDGET_TYPE
@@ -23,7 +22,8 @@ typedef enum _WIDGET_TYPE
     LINEEDIT_TYPE = 1,
     COMBOBOX_TYPE,
     RADIOBUTTON_TYPE,
-    CHECKBOX_TYPE
+    CHECKBOX_TYPE,
+    CHECKBOX_TYPE_CFCD,           //错峰充电
 }WIDGET_TYPE;
 
 typedef struct _INI_LIBCONFIG_CTRL
@@ -36,7 +36,7 @@ typedef QMap<QString, INI_LIBCONFIG_CTRL*> QCacheMapLib;
 
 typedef struct _INI_CONFIG_CTRL
 {
-    QString      settingName;   //配置文件config.ini的section段
+    QString      settingName;    //配置文件config.ini的section段
     QString      value;          //键值
     int          ctlType;        //UI控件的类型
 }INI_CONFIG_CTRL;
@@ -49,9 +49,8 @@ class DataCache : public QObject
 public:
     explicit DataCache(QObject *parent = nullptr);
 
-    QCacheMapLib   readCache();
-    QCacheMapLib   libConfigIniReadCache();
-    QCacheMapConfg configIniReadCache();
+    QCacheMapLib    libConfigIniReadCache();
+    QCacheMapConfg  configIniReadCache();
 
     void libConfigIniWriteCache(QCacheMapLib cacheMapLib);
     void configIniWriteCache(QCacheMapConfg cacheMapConfg);

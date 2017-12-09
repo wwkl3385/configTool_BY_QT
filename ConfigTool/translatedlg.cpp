@@ -25,27 +25,6 @@ translateDlg::translateDlg(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle("秘钥转换");
-#if 0
-    QHBoxLayout *pLayout = new QHBoxLayout();
-    m_pButtonGroup = new QButtonGroup(this);
-
-    // 设置互斥
-    m_pButtonGroup->setExclusive(true);
-    for (int i = 0; i < 3; ++i)
-    {
-        QRadioButton *pButton = new QRadioButton(this);
-
-        // 设置文本
-        pButton->setText(QString::fromLocal8Bit("切换%1").arg(i + 1));
-
-        pLayout->addWidget(pButton);
-        m_pButtonGroup->addButton(pButton);
-    }
-    pLayout->setSpacing(10);
-    pLayout->setContentsMargins(10, 10, 10, 10);
-
-    setLayout(pLayout);
-#endif
 }
 
 translateDlg::~translateDlg()

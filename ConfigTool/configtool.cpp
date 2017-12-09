@@ -12,9 +12,10 @@
 #include "ui_configtool.h"
 #include "translatedlg.h"
 #include "cfcddlg.h"
-#include <QDebug>
-#include <qnamespace.h>
-#include <QMessageBox>
+
+#include<QDebug>
+#include<qnamespace.h>
+#include<QMessageBox>
 
 ConfigTool::ConfigTool(QWidget *parent) :
     QMainWindow(parent),
@@ -92,26 +93,6 @@ ConfigTool::ConfigTool(QWidget *parent) :
 
             ui->centralWidget->findChild<QRadioButton *>(it.key() + "Open")->setChecked(b);
             ui->centralWidget->findChild<QRadioButton *>(it.key() + "Close")->setChecked(!b);
-
-            //            /* 互斥按钮处理  */
-            //            if ((it.key() == "AbnormalOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-            //                ui->centralWidget->findChild<QRadioButton *>("AbnormalCloseRadioButton")->setChecked(true);
-            //            if ((it.key() == "buttonOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-            //                ui->centralWidget->findChild<QRadioButton *>("buttonCloseRadioButton")->setChecked(true);
-            //            if ((it.key() == "cardAutoOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-            //                ui->centralWidget->findChild<QRadioButton *>("cardAutoCloseRadioButton")->setChecked(true);
-            //            if ((it.key() == "cardMultiOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-            //                ui->centralWidget->findChild<QRadioButton *>("cardMultiCloseRadioButton")->setChecked(true);
-            //            if ((it.key() == "localEncryptOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-            //                ui->centralWidget->findChild<QRadioButton *>("localEncryptCloseRadioButton")->setChecked(true);
-            //            if ((it.key() == "remoteEncryptOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-            //                ui->centralWidget->findChild<QRadioButton *>("remoteEncryptCloseRadioButton")->setChecked(true);
-            //            if ((it.key() == "singlePileGroupOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-            //                ui->centralWidget->findChild<QRadioButton *>("singlePileGroupCloseRadioButton")->setChecked(true);
-            //            if ((it.key() == "ticketOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-            //                ui->centralWidget->findChild<QRadioButton *>("ticketCloseRadioButton")->setChecked(true);
-            //            if ((it.key() == "vinAutoOpenRadioButton") & ((configIni->value != "1") & (configIni->value != "true")))
-            //                ui->centralWidget->findChild<QRadioButton *>("vinAutoCloseRadioButton")->setChecked(true);
         }
 
         if (configIni->ctlType == CHECKBOX_TYPE)
@@ -184,7 +165,7 @@ void ConfigTool::on_generatePushButton_clicked()
     {
         INI_LIBCONFIG_CTRL *plibConfigIniTmp;
         plibConfigIniTmp = its.value();
-        plibConfigIniTmp->value[2] = (ui->centralWidget->findChild<QCheckBox *>(its.key())->checkState() == 2 ? "true" : "false");
+        plibConfigIniTmp->value[2] = (ui->centralWidget->findChild<QCheckBox *>(its.key())->checkState() == Qt::Checked ? "true" : "false");
     }
 
     Cache.libConfigIniWriteCache(mapLib);
@@ -201,7 +182,7 @@ void ConfigTool::on_generatePushButton_clicked()
 
         if (configIni->ctlType == RADIOBUTTON_TYPE)
         {
-            configIni->value = (ui->centralWidget->findChild<QRadioButton *>(it.key() + "Open")->isChecked() == 0 ? "0" : "1");
+            configIni->value = (ui->centralWidget->findChild<QRadioButton *>(it.key() + "Open")->isChecked() == false ? "0" : "1");
 
             /* 特殊按钮处理 */
             if ((it.key() == "localEncryptRadioButton") | (it.key() == "remoteEncryptRadioButton"))
@@ -223,7 +204,7 @@ void ConfigTool::on_generatePushButton_clicked()
 
         if (configIni->ctlType == CHECKBOX_TYPE)
         {
-            configIni->value = (ui->centralWidget->findChild<QCheckBox *>(it.key())->checkState() == 2 ? "true" : "false");
+            configIni->value = (ui->centralWidget->findChild<QCheckBox *>(it.key())->checkState() == Qt::Checked ? "true" : "false");
         }
     }
 
@@ -310,6 +291,11 @@ void ConfigTool::on_keyTranslatePushButton_clicked()
 
 void ConfigTool::on_cfcdPushButton_clicked()
 {
-    CFCDDlg dlg;
+    cfcdDlg dlg;
     dlg.exec();
+}
+
+void ConfigTool::on_fhysPushButton_clicked()
+{
+   ;
 }

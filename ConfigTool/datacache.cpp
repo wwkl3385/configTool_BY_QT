@@ -9,10 +9,11 @@
 ************************************************************************/
 #include "datacache.h"
 #include "configtool.h"
-#include <QSettings>
-#include <QDebug>
-#include <string>
-#include <array>
+
+#include<QSettings>
+#include<QDebug>
+#include<string>
+#include<array>
 
 
 /*----------------------------定义变量---------------------------*/
@@ -49,7 +50,7 @@ const QString strKeyNameLib[][3] = {
     };
 
 /* 功能模块---val:默认值 :type,库的名称*.so,val */
-const QString strLibKeyVal[][3] = {
+const QString strKeyValLib[][3] = {
     { "device", "libUpdate.so"                , "true" },  //0  : 升级服务
     { "device", "libChargeService.so"         , "false"},  //1  : 充电服务
     { "device", "libLoadSchedule.so"          , "false"},  //2  : 负荷调度
@@ -68,8 +69,8 @@ const QString strLibKeyVal[][3] = {
     { "device", "libCard.so"                  , "false"}   //15 : 刷卡器;
     };
 
-/* 配置选项一 UI中控件的名称 */
-const QString strFirstWidgetName[] = {
+/* 配置选项一 UI中控件的名称 *///strFirstWidgetName
+const QString strWidgetNameConfig[] = {
     "directLineEdit"         , "singleLineEdit"              , "threeLineEdit"                 ,
     "passwordLineEdit"       , "teuiTypeComboBox"            , "boardComboBox"                 ,  // 0-5  : CSCU系统配置
 
@@ -100,46 +101,50 @@ const QString strFirstWidgetName[] = {
     "lightCloseHourComboBox" , "lightCloseMinuteComboBox"    ,                                     //46-50 : 灯条参数设置
 
     "outageByDoorCheckBox"   ,                                                                     //51    : 开门断电设置
+
+    "CFCDEnableCheckBox"     , "priorityCheckBox"            ,                                     //52-53 : 错峰充电
     };
 
 /* 控件对应的类型 QCheckBox;QLineEdit;QComboBox;QRadioButton; */
 //const int widgetType[] ={
-const  std::array<int, 52> widgetType ={
-    LINEEDIT_TYPE   , LINEEDIT_TYPE   , LINEEDIT_TYPE   ,
-    LINEEDIT_TYPE   , COMBOBOX_TYPE   , COMBOBOX_TYPE   ,   //0-5  : CSCU系统配置
+const  std::array<int, 54> widgetType ={
+    LINEEDIT_TYPE     , LINEEDIT_TYPE     , LINEEDIT_TYPE   ,
+    LINEEDIT_TYPE     , COMBOBOX_TYPE     , COMBOBOX_TYPE   ,   //0-5  : CSCU系统配置
 
-    COMBOBOX_TYPE   , COMBOBOX_TYPE   , RADIOBUTTON_TYPE,
-    RADIOBUTTON_TYPE, RADIOBUTTON_TYPE, RADIOBUTTON_TYPE,
-    RADIOBUTTON_TYPE, RADIOBUTTON_TYPE, RADIOBUTTON_TYPE,   //6-14 : 充电服务配置
+    COMBOBOX_TYPE     , COMBOBOX_TYPE     , RADIOBUTTON_TYPE,
+    RADIOBUTTON_TYPE  , RADIOBUTTON_TYPE  , RADIOBUTTON_TYPE,
+    RADIOBUTTON_TYPE  , RADIOBUTTON_TYPE  , RADIOBUTTON_TYPE,   //6-14 : 充电服务配置
 
-    LINEEDIT_TYPE   , LINEEDIT_TYPE   , LINEEDIT_TYPE   ,
-    LINEEDIT_TYPE   , LINEEDIT_TYPE   , LINEEDIT_TYPE   ,
-    LINEEDIT_TYPE   ,                                       //15-21 : 网络配置
+    LINEEDIT_TYPE     , LINEEDIT_TYPE     , LINEEDIT_TYPE   ,
+    LINEEDIT_TYPE     , LINEEDIT_TYPE     , LINEEDIT_TYPE   ,
+    LINEEDIT_TYPE     ,                                         //15-21 : 网络配置
 
-    LINEEDIT_TYPE   , LINEEDIT_TYPE   ,
-    LINEEDIT_TYPE   , LINEEDIT_TYPE   ,                     //22-25 : can
+    LINEEDIT_TYPE     , LINEEDIT_TYPE     ,
+    LINEEDIT_TYPE     , LINEEDIT_TYPE     ,                     //22-25 : can
 
-    LINEEDIT_TYPE   , RADIOBUTTON_TYPE, LINEEDIT_TYPE   ,
-    LINEEDIT_TYPE   , LINEEDIT_TYPE   ,                     //26-30 : 云平台服务配置
+    LINEEDIT_TYPE     , RADIOBUTTON_TYPE  , LINEEDIT_TYPE   ,
+    LINEEDIT_TYPE     , LINEEDIT_TYPE     ,                     //26-30 : 云平台服务配置
 
-    LINEEDIT_TYPE   , RADIOBUTTON_TYPE, LINEEDIT_TYPE   ,
-    LINEEDIT_TYPE   , LINEEDIT_TYPE   ,                     //31-35 : 场站平台服务配置
+    LINEEDIT_TYPE     , RADIOBUTTON_TYPE  , LINEEDIT_TYPE   ,
+    LINEEDIT_TYPE     , LINEEDIT_TYPE     ,                     //31-35 : 场站平台服务配置
 
-    COMBOBOX_TYPE   , LINEEDIT_TYPE   , LINEEDIT_TYPE   ,
-    LINEEDIT_TYPE   , LINEEDIT_TYPE   , LINEEDIT_TYPE   ,
-    LINEEDIT_TYPE   ,                                       //36-42 : web平台服务器配置
+    COMBOBOX_TYPE     , LINEEDIT_TYPE     , LINEEDIT_TYPE   ,
+    LINEEDIT_TYPE     , LINEEDIT_TYPE     , LINEEDIT_TYPE   ,
+    LINEEDIT_TYPE     ,                                         //36-42 : web平台服务器配置
 
-    COMBOBOX_TYPE   , COMBOBOX_TYPE   , LINEEDIT_TYPE   ,   //43-45 : 充电模式设置
+    COMBOBOX_TYPE     , COMBOBOX_TYPE     , LINEEDIT_TYPE   ,   //43-45 : 充电模式设置
 
-    CHECKBOX_TYPE   , COMBOBOX_TYPE   , COMBOBOX_TYPE   ,
-    COMBOBOX_TYPE   , COMBOBOX_TYPE   ,                     //46-50 : 灯条参数设置
+    CHECKBOX_TYPE     , COMBOBOX_TYPE     , COMBOBOX_TYPE   ,
+    COMBOBOX_TYPE     , COMBOBOX_TYPE     ,                     //46-50 : 灯条参数设置
 
-    CHECKBOX_TYPE   ,                                       //51    : 开门断电设置
+    CHECKBOX_TYPE     ,                                         //51    : 开门断电设置
+
+    CHECKBOX_TYPE_CFCD, CHECKBOX_TYPE_CFCD,                     //52-53 : 错峰充电
                     };
 
 
 /* 配置选项一 config.ini 中对应的文本信息:section/key */
-const QString strFirstKeyName[] = {
+const QString strKeyNameConfig[] = {
     "CSCUSys/DirectCurrent"               , "CSCUSys/SinglePhase"               , "CSCUSys/ThreePhase"                 ,  // 0-2: 直流终端数量，单相终端数量，三相终端数量
     "CSCUSys/Password"                    , "CSCUSys/NormalCard"                , "CSCUSys/BoardType"                  ,  // 3-5: 设置密码，交互类型，底板类型
     "CHARGE/CardType"                     , "CHARGE/VinType"                    , "CHARGE/EnergyFilter"                ,  // 6-8: 卡片类型，车牌号/VIN,异常电量过滤
@@ -170,13 +175,12 @@ const QString strFirstKeyName[] = {
 
     "MAGNETICSWITCH/bOpenDoorPowerOutages",                                                                                //开门断电
 
+    "SMART_CHARGE/SmartCharge_Enable"     , "SMART_CAR/SmartCar_Enable"         ,                                          //错峰充电
 
     "POWER_LIMIT/PowerLimit_Enable"       , "POWER_LIMIT/CCUCount"              , "POWER_LIMIT/StationLimitPower"      ,
     "POWER_LIMIT/SafeLimitPower"          , "POWER_LIMIT/SumPower_Manual"       , "POWER_LIMIT/SumPower_Ammeter_Enable",
     "POWER_LIMIT/SumPower_Server_Enable"  , "POWER_LIMIT/SumPower_Manual_Enable",
 
-    "SMART_CHARGE/SmartCharge_Enable"     ,
-    "SMART_CAR/SmartCar_Enable"           ,
 
     "IOIN/DIN1"                           , "IOIN/DIN2"                         , "IOIN/DIN3"                          ,
     "IOIN/DIN4"                           , "IOIN/DIN5"                         , "IOIN/DIN6"                          ,
@@ -186,7 +190,7 @@ const QString strFirstKeyName[] = {
 
 
  /* 配置选项一 config.ini 中对应的文本信息:section/val */
-const QString strFirstValue[] = {
+const QString strKeyValConfig[] = {
     ""                     , ""                     , ""                    ,  // 0-2: 直流终端数量，单相终端数量，三相终端数量
     "300001"               , "1"                    , "2"                   ,  // 3-5: 设置密码，交互类型，底板类型
     "2"                    , "3"                    , "0"                   ,  // 6-8: 卡片类型，车牌号/vin,异常电量过滤
@@ -216,6 +220,8 @@ const QString strFirstValue[] = {
     "6"                    , "0"                    ,                          //灯条参数设置
 
     "false"                ,                                                   //开门断电
+
+    ""                     , ""                     ,                          //错峰充电
 };
 
 
@@ -242,9 +248,9 @@ DataCache::DataCache(QObject *parent) : QObject(parent)
         plibConfigIni = new  INI_LIBCONFIG_CTRL;
 
         /* 写入libconfig.ini配置文件的默认部分 :type和library对应的值*/
-        plibConfigIni->value[0] = strLibKeyVal[i][0]; // section/key
-        plibConfigIni->value[1] = strLibKeyVal[i][1]; // section/library
-        plibConfigIni->value[2] = strLibKeyVal[i][2]; // section/val
+        plibConfigIni->value[0] = strKeyValLib[i][0]; // section/key
+        plibConfigIni->value[1] = strKeyValLib[i][1]; // section/library
+        plibConfigIni->value[2] = strKeyValLib[i][2]; // section/val
 
         /* 段名/键名 */
         for (int j=0; j<3; j++)
@@ -259,16 +265,16 @@ DataCache::DataCache(QObject *parent) : QObject(parent)
     INI_CONFIG_CTRL    *pconfigIni;     //config.ini
 
      /* sizeof(strWidgetNameLib)/(sizeof(QString)):功能模块控件的数量 */
-    for (uint j=0; j < sizeof(strFirstWidgetName)/(sizeof(QString)); j++)
+    for (uint j=0; j < sizeof(strWidgetNameConfig)/(sizeof(QString)); j++)
     {
         pconfigIni = new INI_CONFIG_CTRL;
 
         /* 写入config.ini配置文件的默认部分 :type和library对应的值*/
         pconfigIni->ctlType = widgetType[j];              // 控件类型
-        pconfigIni->settingName = strFirstKeyName[j];     // section/key
-        pconfigIni->value = strFirstValue[j];             // section/val
+        pconfigIni->settingName = strKeyNameConfig[j];    // section/key
+        pconfigIni->value = strKeyValConfig[j];           // section/val
 
-        dataCacheMapConfig.insert(strFirstWidgetName[j], pconfigIni); //对应的数据映射到dataCacheMapLib
+        dataCacheMapConfig.insert(strWidgetNameConfig[j], pconfigIni); //对应的数据映射到dataCacheMapLib
     }
 }
 

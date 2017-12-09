@@ -2,7 +2,7 @@
 #
 # Project created by QtCreator 2017-11-20T09:28:22
 #
-#-------------------------------------------------
+G#-------------------------------------------------
 
 QT       += core gui
 
@@ -25,22 +25,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         configtool.cpp \
-    translatedlg.cpp \
-    datacache.cpp \
-    main.cpp \
-    cfcddlg.cpp
+        translatedlg.cpp \
+        datacache.cpp \
+        main.cpp \
+        cfcddlg.cpp
+
+LIBS += ../lib/sqlite3.lib
 
 HEADERS += \
         configtool.h \
-    translatedlg.h \
-    datacache.h \
-    cfcddlg.h
+        translatedlg.h \
+        datacache.h \
+        cfcddlg.h
 
 FORMS   += \
         configtool.ui \
-    translatedlg.ui \
-    cfcddlg.ui
+        translatedlg.ui \
+        cfcddlg.ui
 
 RESOURCES += \
-    configtoolicon.qrc
+        configtoolicon.qrc
+
 RC_FILE    = icon.rc

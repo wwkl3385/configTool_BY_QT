@@ -14,6 +14,7 @@
 #include <windows.h>
 #include "datacache.h"
 
+
 #define MAX_PATH   260
 
 #define MODULE(name)  #name
@@ -31,32 +32,9 @@ class ConfigTool : public QMainWindow
 public:
     explicit ConfigTool(QWidget *parent = 0);
     ~ConfigTool();
-    DataCache Cache;
+    DataCache      Cache;
     QCacheMapLib   mapLib;    //libconfig.ini map数据缓存区
     QCacheMapConfg mapConfig; //config.ini   map数据缓存区
-
-    BOOL m_bCharge;
-    BOOL m_bSchedule;
-    BOOL m_bSetting;
-    BOOL m_bUpdate;
-    BOOL m_bReal;
-    BOOL m_bCache;
-    BOOL m_bDatabase;
-    BOOL m_bLog;
-    BOOL m_bRemote;
-    BOOL m_bLocal;
-    BOOL m_bEquipment;
-    BOOL m_bAmmeter;
-    BOOL m_bHumiture;
-    BOOL m_bTicket;
-    BOOL m_bCard;
-    BOOL m_bScreen;
-    BOOL m_bGPIO;
-    BOOL m_bDevManager;
-    BOOL m_bWebServer;
-    BOOL m_bScreenSinglePile;
-    BOOL m_bScanner;
-    void updateData(uchar);
 
 private slots:
     void on_actionAbout_triggered();
@@ -66,8 +44,8 @@ private slots:
     void on_screenSinglePileCheckBox_clicked();
     void on_webUrlComboBox_currentTextChanged(const QString &arg1);
     void on_chargeTypeComboBox_currentIndexChanged(int index);
-
     void on_cfcdPushButton_clicked();
+    void on_fhysPushButton_clicked();
 
 private:
     Ui::ConfigTool *ui;
