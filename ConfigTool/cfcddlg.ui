@@ -66,15 +66,18 @@
      <property name="text">
       <string>删除</string>
      </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
    <item row="3" column="0" colspan="7">
     <widget class="QTableWidget" name="CFCDTableWidget">
      <property name="rowCount">
-      <number>6</number>
+      <number>0</number>
      </property>
      <property name="columnCount">
-      <number>5</number>
+      <number>0</number>
      </property>
      <attribute name="horizontalHeaderVisible">
       <bool>true</bool>
@@ -94,23 +97,18 @@
      <attribute name="verticalHeaderDefaultSectionSize">
       <number>30</number>
      </attribute>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
     </widget>
    </item>
    <item row="2" column="5">
     <widget class="QPushButton" name="CFCDAddPushButton">
      <property name="text">
       <string>添加</string>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <property name="autoDefault">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

@@ -42,8 +42,8 @@ ConfigTool::ConfigTool(QWidget *parent) :
     }
     for (int i=0; i<60; i++)
     {
-        ui->lightOpenMinuteComboBox->insertItem(i, QString::number(i, 10));   //0-59 秒
-        ui->lightCloseMinuteComboBox->insertItem(i, QString::number(i, 10));  //0-59 秒
+        ui->lightOpenMinuteComboBox->insertItem(i, QString::number(i, 10));   //0-59 分
+        ui->lightCloseMinuteComboBox->insertItem(i, QString::number(i, 10));  //0-59 分
 
     }
 
